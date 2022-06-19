@@ -43,3 +43,18 @@ module.exports.validateLoginInput = (email, password) => {
     valid: Object.keys(errors).length < 1,
   };
 };
+
+module.exports.validateClientAddition = (managerEmail, name) => {
+  const errors = {};
+  if (managerEmail.trim() === "") {
+    errors.managerEmail = "Please add a manager's email.";
+  }
+  if (name === "") {
+    errors.name = "Client name must not be empty.";
+  }
+
+  return {
+    errors,
+    valid: Object.keys(errors).length < 1,
+  };
+};

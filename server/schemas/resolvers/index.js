@@ -1,11 +1,14 @@
+const clientResolvers = require('./clientResolvers');
 const usersResolvers = require('./userResolvers');
 
 const resolvers = {
     Query: {
-        ...usersResolvers.Query
+        ...usersResolvers.Query,
+        ...clientResolvers.Query
     },
     Mutation: {
-        ...usersResolvers.Mutation
+        ...usersResolvers.Mutation,
+        ...clientResolvers.Mutation
     }
 }
 

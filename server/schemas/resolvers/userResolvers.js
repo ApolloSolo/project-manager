@@ -13,7 +13,13 @@ module.exports = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        const userData = await User.findOne({_id: context.user._id}).select("-__v -password");
+        const userData = await User.findOne({ _id: context.user._id })
+          .select("-__v -password")
+          .populate("clients")
+          .populate({
+            path: "clients.projects",
+            populate: 'projects'
+          })
 
         return userData;
       }
@@ -22,7 +28,7 @@ module.exports = {
 
     // Get all users
     getUsers: async (parent, args, context) => {
-      return User.find();
+      return await User.find().populate("clients");
     },
   },
 

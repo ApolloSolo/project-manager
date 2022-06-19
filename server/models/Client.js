@@ -11,12 +11,10 @@ const clientSchema = new Schema({
       ref: "Project",
     },
   ],
-  manager: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ]
+  manager: {
+    type: String,
+    require: true
+  }
   ,
 });
 

@@ -18,7 +18,7 @@ const typeDefs = gql`
     _id: ID!
     name: String!
     projects: [Project]
-    manager: [User]
+    manager: String!
   }
 
   type Project {
@@ -30,7 +30,8 @@ const typeDefs = gql`
 
   type Query {
     me: User!
-    getUsers: [User]!
+    getUsers: [User]
+    getClients: [Client]
   }
 
   type Mutation {
@@ -41,6 +42,8 @@ const typeDefs = gql`
       confirmPassword: String!
     ): Auth!
     login(email: String!, password: String!): Auth!
+    addClient(managerEmail: String! clientName: String!): Client!
+    updateClientManager(managerEmail: String!, clientName: String!): Client!
   }
 `;
 
