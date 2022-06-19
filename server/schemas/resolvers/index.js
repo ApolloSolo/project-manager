@@ -1,4 +1,5 @@
 const clientResolvers = require('./clientResolvers');
+const projectResolvers = require('./projectResolvers');
 const usersResolvers = require('./userResolvers');
 
 const resolvers = {
@@ -8,7 +9,8 @@ const resolvers = {
     },
     Mutation: {
         ...usersResolvers.Mutation,
-        ...clientResolvers.Mutation
+        ...clientResolvers.Mutation,
+        ...projectResolvers.Mutation
     }
 }
 

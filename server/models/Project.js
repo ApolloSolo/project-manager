@@ -18,10 +18,6 @@ const projectSchema = new Schema({
   subContractor: {
     type: String,
   },
-  client: {
-    type: Schema.Types.ObjectId,
-    ref: "Client",
-  },
 });
 
 const Project = model("Project", projectSchema);

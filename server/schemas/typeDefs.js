@@ -21,11 +21,16 @@ const typeDefs = gql`
     manager: String!
   }
 
+  type Asset {
+    asset: String!
+    volume: Int!
+  }
+
   type Project {
     _id: ID
     siteId: String
     subContractor: String
-    client: Client
+    assets: [Asset]
   }
 
   type Query {
@@ -44,6 +49,8 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth!
     addClient(managerEmail: String! clientName: String!): Client!
     updateClientManager(managerEmail: String!, clientName: String!): Client!
+    addProject(clientName: String!, siteId: String!, subContractor: String!): Client!
+    addAsset(siteId: String!, asset: String!, volume: Int!): Project!
   }
 `;
 

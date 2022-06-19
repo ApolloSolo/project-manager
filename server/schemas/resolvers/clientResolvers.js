@@ -1,4 +1,4 @@
-const { User, Client } = require("../../models/index");
+const { User, Client, Project } = require("../../models/index");
 const {
   AuthenticationError,
   UserInputError,
@@ -8,7 +8,7 @@ const { validateClientAddition } = require("../../utils/validators");
 module.exports = {
   Query: {
     getClients: async (parent, args, context) => {
-      const clients = await Client.find().populate("manager");
+      const clients = await Client.find().populate("projects");
       return clients;
     },
   },
@@ -64,12 +64,12 @@ module.exports = {
       }
 
       // Get client data before changing manager (need old manager email)
-      const preClientUpdate = await Client.findOne({name: clientName });
+      const preClientUpdate = await Client.findOne({ name: clientName });
 
       // Find old manager and remove client from their array
       const oldManager = await User.findOneAndUpdate(
         { email: preClientUpdate.manager },
-        { $pullAll: { clients:  [preClientUpdate._id]  } }
+        { $pullAll: { clients: [preClientUpdate._id] } }
       );
 
       // Update client to have new manager
