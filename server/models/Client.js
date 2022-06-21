@@ -1,21 +1,31 @@
 const { Schema, model } = require("mongoose");
 
-const clientSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  projects: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Project",
+const clientSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
     },
-  ],
-  manager: {
-    type: String,
-    require: true
+    projects: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Project",
+      },
+    ],
+    manager: {
+      type: String,
+      require: true,
+    },
+  },
+  {
+    toJSON: {
+      virtuals: true,
+    },
   }
-  ,
+);
+
+clientSchema.virtual("projectCount").get(function () {
+  return this.projects.length;
 });
 
 const Client = model("Client", clientSchema);

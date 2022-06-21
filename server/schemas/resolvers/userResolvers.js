@@ -1,4 +1,4 @@
-const { User } = require("../../models/index");
+const { User, Client, Project } = require("../../models/index");
 const {
   AuthenticationError,
   UserInputError,
@@ -8,26 +8,34 @@ const {
   validateLoginInput,
 } = require("../../utils/validators");
 const { signToken } = require("../../utils/auth");
+const catchAsync = require("../../utils/catchAsync");
 
 module.exports = {
   Query: {
     me: async (parent, args, context) => {
-      if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id })
-          .select("-__v -password")
-          .populate("clients")
-          .populate({
-            path: "clients.projects",
-            populate: 'projects'
-          })
-
-        return userData;
+      if (!context.user) {
+        throw new AuthenticationError("Errors", {
+          errors: { auth: "Not an authorized user" },
+        });
       }
-      throw new AuthenticationError("Not logged in");
+      const userData = await User.findOne({ _id: context.user._id })
+        .select("-__v -password")
+        .populate("clients")
+        .populate({
+          path: "clients",
+          populate: "projects",
+        });
+
+      return userData;
     },
 
     // Get all users
     getUsers: async (parent, args, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("Errors", {
+          errors: { auth: "Not an authorized user" },
+        });
+      }
       return await User.find().populate("clients");
     },
   },

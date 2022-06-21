@@ -8,6 +8,11 @@ const { validateClientAddition } = require("../../utils/validators");
 module.exports = {
   Query: {
     getClients: async (parent, args, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("Errors", {
+          errors: { auth: "Not an authorized user" },
+        });
+      }
       const clients = await Client.find().populate("projects");
       return clients;
     },
@@ -20,6 +25,11 @@ module.exports = {
         managerEmail,
         clientName
       );
+      if (!context.user) {
+        throw new AuthenticationError("Errors", {
+          errors: { auth: "Not an authorized user" },
+        });
+      }
       if (!valid) {
         throw new UserInputError("Errors", { errors });
       }
@@ -59,6 +69,11 @@ module.exports = {
         managerEmail,
         clientName
       );
+      if (!context.user) {
+        throw new AuthenticationError("Errors", {
+          errors: { auth: "Not an authorized user" },
+        });
+      }
       if (!valid) {
         throw new UserInputError("Errors", { errors });
       }
