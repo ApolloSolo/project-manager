@@ -79,7 +79,7 @@ const Navbar = () => {
                     <Link to="/login">
                       <li className="p-4">Login</li>
                     </Link>
-                    <li className="p-4">Register</li>
+                    <Link to='/register'><li className="p-4">Register</li></Link>
                   </ul>
                 </div>
               </div>
@@ -117,7 +117,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className="flex-row px-1">
+    <header className="flex-row">
       <nav>
         {showNav()}
       </nav>
