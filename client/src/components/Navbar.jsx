@@ -117,7 +117,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className="flex-row px-1">
+    <header className="flex-row">
       <nav>
         {showNav()}
       </nav>

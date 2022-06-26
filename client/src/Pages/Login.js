@@ -5,11 +5,10 @@ import Auth from "../utils/auth";
 
 const Login = () => {
   const [formState, setFormState] = useState({ email: "", password: "" });
-  const [login, { error }] = useMutation(LOGIN);
+  const [login, { error }] = useMutation(LOGIN, { errorPolicy: "all" });
+  const [errors, setErrors] = useState({});
 
-  if (error) {
-    console.log("This is an error: " + error);
-  }
+  let err;
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -17,7 +16,11 @@ const Login = () => {
       const response = await login({
         variables: { email: formState.email, password: formState.password },
       });
-      console.log("Response object " + response);
+      if (response.errors) {
+        //console.log(response.errors[0].extensions.errors);
+        setErrors(response.errors[0].extensions.errors);
+        console.log(errors);
+      }
       const token = response.data.login.token;
       Auth.login(token);
     } catch (e) {
@@ -34,10 +37,13 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-12 border border-[#30cad5] rounded-sm mx-2 md:mx-10 p-2 bg-[#3b3b3b]">
+    <div className="flex flex-col h-[350px] items-center mt-12 border border-[#30cad5] rounded-sm mx-2 md:mx-10 p-2 bg-[#3b3b3b]">
       <h1 className="text-center text-4xl text-[#30cad5]">Login</h1>
-      <form onSubmit={handleFormSubmit} className="w-[60%] min-w-[325px] mt-4">
-        <div className="mb-3 pt-0">
+      <form
+        onSubmit={handleFormSubmit}
+        className="flex flex-col items-center w-[60%] min-w-[325px] mt-8"
+      >
+        <div className="mb-3 pt-0 w-full">
           <input
             type="email"
             name="email"
@@ -46,7 +52,7 @@ const Login = () => {
             onChange={handleChange}
           />
         </div>
-        <div className="mb-3 pt-0">
+        <div className="my-6 pt-0 w-full">
           <input
             type="password"
             name="password"
@@ -56,9 +62,23 @@ const Login = () => {
           />
         </div>
         <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
+          <button
+            className="text-white border-2 hover:bg-[#3faec1] hover:border-[#3faec1] px-4 py-3 my-8 mx-auto flex items-center duration-300"
+            type="submit"
+          >
+            Submit
+          </button>
         </div>
       </form>
+      {Object.keys(errors).length > 0 && (
+        <div className="h-75px text-[#991111] text-xl mt-8 text-center">
+          <ul className="">
+            {Object.values(errors).map((value) => (
+              <li key={value}>{value}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
