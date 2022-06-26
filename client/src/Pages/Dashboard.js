@@ -1,8 +1,9 @@
 import React from 'react'
+import Clients from '../components/Clients'
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <div><Clients /></div>
   )
 }
 

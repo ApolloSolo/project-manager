@@ -10,7 +10,7 @@ const Register = () => {
     password: "",
     confirmPassword: "",
   });
-  const [register, { error }] = useMutation(REGISTER, { errorPolicy: "all" });
+  const [register] = useMutation(REGISTER, { errorPolicy: "all" });
   const [errors, setErrors] = useState({});
 
   const handleFormSubmit = async (event) => {

@@ -5,10 +5,9 @@ import Auth from "../utils/auth";
 
 const Login = () => {
   const [formState, setFormState] = useState({ email: "", password: "" });
-  const [login, { error }] = useMutation(LOGIN, { errorPolicy: "all" });
-  const [errors, setErrors] = useState({});
 
-  let err;
+  const [login] = useMutation(LOGIN, { errorPolicy: "all" });
+  const [errors, setErrors] = useState({});
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -17,9 +16,7 @@ const Login = () => {
         variables: { email: formState.email, password: formState.password },
       });
       if (response.errors) {
-        //console.log(response.errors[0].extensions.errors);
         setErrors(response.errors[0].extensions.errors);
-        console.log(errors);
       }
       const token = response.data.login.token;
       Auth.login(token);
@@ -34,6 +31,7 @@ const Login = () => {
       ...formState,
       [name]: value,
     });
+    console.log(formState)
   };
 
   return (
