@@ -79,7 +79,7 @@ const Navbar = () => {
                     <Link to="/login">
                       <li className="p-4">Login</li>
                     </Link>
-                    <li className="p-4">Register</li>
+                    <Link to='/register'><li className="p-4">Register</li></Link>
                   </ul>
                 </div>
               </div>
