@@ -1,7 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: rgb(29, 29, 29);
+  font-family: 'Roboto', sans-serif;
+}
 
-body{
-    background-color: rgb(29, 29, 29);
+h1 {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.homeImg h1{
+    text-shadow: 5px 5px 5px rgb(33, 33, 33), 0 0 1em rgb(45, 45, 45), 0 0 0.2em rgb(65, 65, 65);
+    -webkit-text-stroke: .75px black;
+}
+
+.homeImg {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(68, 68, 68, 0.9),
+      rgba(39, 39, 39, 0.6)
+    ),
+    url("https://images.unsplash.com/photo-1577628208847-167e003eab07?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fDhrfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=1100&q=60");
+  background-size: cover;
+  height: calc(100vh - 80px);
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
