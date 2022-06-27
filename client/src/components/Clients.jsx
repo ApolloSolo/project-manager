@@ -6,8 +6,10 @@ import Auth from "../utils/auth";
 const Clients = () => {
   const userProfile = Auth.getProfile();
 
-  const { loading, data } = useQuery(ME);
+  const { loading, error, data } = useQuery(ME);
   const userData = data?.me || [];
+
+  if(error) return <p>Somthing Went Wrong</p>
 
   //console.log(userData.clients.projects);
   return (
